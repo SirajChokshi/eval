@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet"" href="main.css" />
+    <title>Eval Page</title>
+  </head>
+  <body>
+    <main>
+      <textarea id="editor">
+// This is a JavaScript editor.
+// You can type any JavaScript code here and it will be executed.
+console.log("Hello World!");
+
+// Click the "Evaluate" button to run the code.
+// Logs are also available below.</textarea
+      >
+      <button id="action_eval">Evaluate</button>
+    </main>
+    <div id="logs">
+      <h3>Logs</h3>
+      <div id="logs__container"></div>
+    </div>
+  </body>
+  <script>
+    const $logs = document.getElementById("logs__container");
+    const $evaluateBtn = document.getElementById("action_eval");
+    const $editor = document.getElementById("editor");
+
+    $evaluateBtn.onclick = () => {
+      eval($editor.value);
+    };
+
+    const rawLog = window.console.log;
+
+    window.console.log = function () {
+      const timeStamp = new Date().toLocaleTimeString();
+      let [text, style] = Array.from(arguments);
+
+      if (typeof text === "string" && text.startsWith("%c")) {
+        text = text.replace("%c", "");
+      } else {
+        style = "";
+      }
+
+      const $timestamp = document.createElement("div");
+      $timestamp.innerText = timeStamp;
+      $timestamp.classList.add("log__timestamp");
+
+      const $text = document.createElement("div");
+      $text.innerText = text;
+      $text.style = style;
+      $text.classList.add("log__text");
+
+      $logs.appendChild($timestamp);
+      $logs.appendChild($text);
+
+      // scroll to bottom of logs
+      $logs.scrollTop = $logs.scrollHeight;
+
+      return rawLog.apply(this, arguments);
+    };
+
+    console.log(
+      "%cREAD HERE",
+      "font-size: 64px; font-weight: bold; color: red;"
+    );
+    console.log(
+      "%cThis application is for developers.",
+      "font-size: 28px; font-weight: bold; color: red;"
+    );
+    console.log(
+      "%cIf somebody told you to type something here, you are being scammed.",
+      "font-size: 24px; font-weight: bold;"
+    );
+  </script>
+</html>

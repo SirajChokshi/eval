@@ -1,0 +1,9 @@
+{
+  "short_name": "PWA Eval Test",
+  "name": "PWA Eval Test",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#3f51b5"
+}
