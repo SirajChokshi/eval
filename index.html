@@ -50,7 +50,7 @@ console.log("Hello World!");
       $timestamp.innerText = timeStamp;
       $timestamp.classList.add("log__timestamp");
 
-      const $text = document.createElement("div");
+      const $text = document.createElement("pre");
       $text.innerText = text;
       $text.style = style;
       $text.classList.add("log__text");
@@ -69,12 +69,8 @@ console.log("Hello World!");
       "font-size: 64px; font-weight: bold; color: red;"
     );
     console.log(
-      "%cThis application is for developers.",
-      "font-size: 28px; font-weight: bold; color: red;"
-    );
-    console.log(
-      "%cIf somebody told you to type something here, you are being scammed.",
-      "font-size: 24px; font-weight: bold;"
+      "%c - This application is for developers.\n - Don't paste any code here that you don't understand.",
+      "font-size: 28px; font-weight: bold;"
     );
   </script>
 </html>
