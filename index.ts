@@ -37,7 +37,7 @@ window.console.log = function () {
   // scroll to bottom of logs
   $logs.scrollTop = $logs.scrollHeight;
 
-  return _log(this, arguments);
+  return _log.apply(this, arguments);
 };
 
 const params = new URLSearchParams(window.location.search);
@@ -46,6 +46,19 @@ const maybeQuery = params.get("q");
 if (maybeQuery) {
   $editor.value = maybeQuery;
 }
+
+$editor.addEventListener("keydown", function (e) {
+  if (e.key == "Tab") {
+    e.preventDefault();
+    var start = this.selectionStart;
+    var end = this.selectionEnd;
+
+    this.value =
+      this.value.substring(0, start) + "\t" + this.value.substring(end);
+
+    this.selectionStart = this.selectionEnd = start + 1;
+  }
+});
 
 $editor.addEventListener("keyup", () => {
   params.set("q", $editor.value);

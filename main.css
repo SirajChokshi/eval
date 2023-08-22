@@ -31,6 +31,8 @@ main {
 
 textarea {
   flex: 1;
+  line-height: 1.25;
+  tab-size: 4;
 }
 
 #logs {
