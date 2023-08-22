@@ -25,45 +25,8 @@ console.log("Hello World!");
       <div id="logs__container"></div>
     </div>
   </body>
-  <script>
-    const $logs = document.getElementById("logs__container");
-    const $evaluateBtn = document.getElementById("action_eval");
-    const $editor = document.getElementById("editor");
-
-    $evaluateBtn.onclick = () => {
-      eval($editor.value);
-    };
-
-    const rawLog = window.console.log;
-
-    window.console.log = function () {
-      const timeStamp = new Date().toLocaleTimeString();
-      let [text, style] = Array.from(arguments);
-
-      if (typeof text === "string" && text.startsWith("%c")) {
-        text = text.replace("%c", "");
-      } else {
-        style = "";
-      }
-
-      const $timestamp = document.createElement("div");
-      $timestamp.innerText = timeStamp;
-      $timestamp.classList.add("log__timestamp");
-
-      const $text = document.createElement("pre");
-      $text.innerText = text;
-      $text.style = style;
-      $text.classList.add("log__text");
-
-      $logs.appendChild($timestamp);
-      $logs.appendChild($text);
-
-      // scroll to bottom of logs
-      $logs.scrollTop = $logs.scrollHeight;
-
-      return rawLog.apply(this, arguments);
-    };
-
+  <script src="dist/index.js"></script>
+  <script defer>
     console.log(
       "%cREAD HERE",
       "font-size: 64px; font-weight: bold; color: red;"
