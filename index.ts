@@ -1,24 +1,31 @@
+const DEFAULT_CODE = `// This is a JavaScript editor.
+// You can type any JavaScript code here and it will be executed.
+console.log("Hello World!");
+
+// Click the "Evaluate" button to run the code.
+// Logs are also available below.`;
+
 const $logs = document.getElementById("logs__container") as HTMLDivElement;
 const $evaluateBtn = document.getElementById(
   "action_eval"
 ) as HTMLButtonElement;
-const $editor = document.getElementById("editor") as HTMLTextAreaElement;
+const $clearBtn = document.getElementById("action_clear") as HTMLButtonElement;
+const $editor = document.getElementById(
+  "editor-textarea"
+) as HTMLTextAreaElement;
+const $editorRenderer = document.getElementById(
+  "editor-renderer"
+) as HTMLPreElement;
 
 $evaluateBtn.onclick = () => {
   eval($editor.value);
 };
 
 const _log = window.console.log;
+const _error = window.console.error;
 
-window.console.log = function () {
+function htmlLog(text: string, style: string) {
   const timeStamp = new Date().toLocaleTimeString();
-  let [text, style] = Array.from(arguments);
-
-  if (typeof text === "string" && text.startsWith("%c")) {
-    text = text.replace("%c", "");
-  } else {
-    style = "";
-  }
 
   const $timestamp = document.createElement("div");
   $timestamp.innerText = timeStamp;
@@ -36,16 +43,51 @@ window.console.log = function () {
 
   // scroll to bottom of logs
   $logs.scrollTop = $logs.scrollHeight;
+}
+
+window.console.log = function () {
+  let [text, style] = Array.from(arguments);
+
+  if (typeof text === "string" && text.startsWith("%c")) {
+    text = text.replace("%c", "");
+  } else {
+    style = "";
+  }
+
+  htmlLog(text, style);
 
   return _log.apply(this, arguments);
 };
+
+window.console.error = function () {
+  let [text, style] = Array.from(arguments);
+
+  if (typeof text === "string" && text.startsWith("%c")) {
+    text = text.replace("%c", "");
+  } else {
+    style = "color: red; background: pink;";
+  }
+
+  htmlLog(text, style);
+
+  return _error.apply(this, arguments);
+};
+
+function render() {
+  $editorRenderer.textContent = $editor.value;
+  window["hljs"].highlightBlock($editorRenderer);
+}
 
 const params = new URLSearchParams(window.location.search);
 const maybeQuery = params.get("q");
 
 if (maybeQuery) {
   $editor.value = maybeQuery;
+} else {
+  $editor.value = DEFAULT_CODE;
 }
+
+$editor.addEventListener("input", render);
 
 $editor.addEventListener("keydown", function (e) {
   if (e.key == "Tab") {
@@ -70,3 +112,21 @@ $editor.addEventListener("keyup", () => {
 });
 
 $editor.focus();
+
+function init() {
+  render();
+  console.log("%cREAD HERE", "font-size: 64px; font-weight: bold; color: red;");
+  console.log(
+    "%c - This application is for developers.\n - Don't run any code here that you don't understand.",
+    "font-size: 28px; font-weight: bold;"
+  );
+}
+
+$clearBtn.onclick = () => {
+  $logs.innerHTML = "";
+
+  $editor.value = "";
+  init();
+};
+
+init();

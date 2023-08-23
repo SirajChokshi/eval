@@ -29,10 +29,49 @@ main {
   gap: 5px;
 }
 
-textarea {
+fieldset {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7.5px;
+}
+
+#editor {
+  position: relative;
+  flex: 1;
+}
+
+#editor > * {
   line-height: 1.25;
   tab-size: 4;
+  padding: 10px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  font-family: "Fira Code", monospace;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+
+  font-size: 0.9rem;
+}
+
+#editor-textarea {
+  resize: none;
+  border: none;
+  color: transparent;
+  background: transparent;
+  z-index: 1;
+  caret-color: black;
+}
+
+#editor-textarea::selection {
+  background: blue;
+  color: white;
 }
 
 #logs {

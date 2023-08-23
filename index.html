@@ -6,19 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet"" href="main.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/styles/default.min.css"
+    />
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
     <title>Eval Page</title>
   </head>
   <body>
     <main>
-      <textarea id="editor">
-// This is a JavaScript editor.
-// You can type any JavaScript code here and it will be executed.
-console.log("Hello World!");
-
-// Click the "Evaluate" button to run the code.
-// Logs are also available below.</textarea
-      >
-      <button id="action_eval">Evaluate</button>
+      <fieldset>
+        <legend>Editor</legend>
+        <div id="editor">
+          <pre id="editor-renderer"></pre>
+          <textarea id="editor-textarea"></textarea>
+        </div>
+        <div>
+          <button id="action_eval">Evaluate</button>
+          <button id="action_clear">Clear</button>
+        </div>
+      </fieldset>
     </main>
     <div id="logs">
       <h3>Logs</h3>
@@ -26,14 +33,4 @@ console.log("Hello World!");
     </div>
   </body>
   <script src="dist/index.js"></script>
-  <script defer>
-    console.log(
-      "%cREAD HERE",
-      "font-size: 64px; font-weight: bold; color: red;"
-    );
-    console.log(
-      "%c - This application is for developers.\n - Don't run any code here that you don't understand.",
-      "font-size: 28px; font-weight: bold;"
-    );
-  </script>
 </html>
