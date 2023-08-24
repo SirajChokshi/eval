@@ -45,6 +45,7 @@ fieldset {
   line-height: 1.25;
   tab-size: 4;
   padding: 10px;
+  border: 1px outset black;
 
   position: absolute;
   top: 0;
@@ -70,8 +71,11 @@ fieldset {
 }
 
 #editor-textarea::selection {
-  background: blue;
-  color: white;
+  background: #67b4fb5d;
+}
+
+#editor-textarea:focus {
+  outline: none;
 }
 
 #logs {
