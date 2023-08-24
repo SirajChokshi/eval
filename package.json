@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc ./index.ts --outDir ./dist --target esnext",
-    "dev": "tsc ./index.ts --outDir ./dist --target esnext --watch"
+    "build": "tsc ./src/index.ts --outDir ./dist --target esnext",
+    "dev": "tsc ./src/index.ts --outDir ./dist --target esnext --watch"
   },
   "keywords": [],
   "author": "",

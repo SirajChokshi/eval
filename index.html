@@ -19,11 +19,21 @@
         <legend>Editor</legend>
         <div id="editor">
           <pre id="editor-renderer"></pre>
-          <textarea id="editor-textarea"></textarea>
+          <textarea
+            placeholder="Write JavaScript here"
+            id="editor-textarea"
+          ></textarea>
         </div>
         <div>
           <button id="action_eval">Evaluate</button>
           <button id="action_clear">Clear</button>
+          <button
+            id="action_share"
+            class="secondary"
+            title="Copy a permalink to your clipboard"
+          >
+            Copy Permalink
+          </button>
         </div>
       </fieldset>
     </main>
@@ -32,5 +42,5 @@
       <div id="logs__container"></div>
     </div>
   </body>
-  <script src="dist/index.js"></script>
+  <script type="module" src="dist/index.js"></script>
 </html>
