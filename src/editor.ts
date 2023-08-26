@@ -24,16 +24,8 @@ export class EditorImpl {
       }
     });
 
-    this.textarea.addEventListener("keyup", () => {
-      this.params.set("q", this.textarea.value);
-      window.history.replaceState(
-        {},
-        "",
-        `${window.location.pathname}?${this.params.toString()}`
-      );
-    });
-
-    this.textarea.addEventListener("scroll", () => this.scrollSync());
+    this.textarea.addEventListener("keyup", this.syncParams.bind(this));
+    this.textarea.addEventListener("scroll", this.syncScroll.bind(this));
 
     this.textarea.value = this.params.get("q") || DEFAULT_CODE;
 
@@ -58,7 +50,7 @@ export class EditorImpl {
     this.renderer.textContent = sanitized;
 
     // scroll sync in case content causes overflow
-    this.scrollSync();
+    this.syncScroll();
 
     if (window["hljs"]) {
       // if hljs is loaded, highlight the code
@@ -66,7 +58,16 @@ export class EditorImpl {
     }
   }
 
-  private scrollSync() {
+  public syncParams() {
+    this.params.set("q", this.textarea.value);
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${this.params.toString()}`
+    );
+  }
+
+  private syncScroll() {
     this.renderer.scrollTop = this.textarea.scrollTop;
     this.renderer.scrollLeft = this.textarea.scrollLeft;
   }
